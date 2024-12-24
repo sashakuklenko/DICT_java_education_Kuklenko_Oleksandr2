@@ -5,7 +5,26 @@ import java.util.HashSet;
 
 public class hangman {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
         System.out.println("HANGMAN");
+
+        while (true) {
+            System.out.print("Type \"play\" to play the game, \"exit\" to quit: > ");
+            String choice = scanner.nextLine();
+
+            if (choice.equals("play")) {
+                playGame(scanner);
+            } else if (choice.equals("exit")) {
+                System.out.println("Goodbye!");
+                break;
+            } else {
+                System.out.println("Invalid choice. Please type \"play\" or \"exit\".");
+            }
+        }
+    }
+
+    public static void playGame(Scanner scanner) {
 
         String[] words = {"python", "java", "javascript", "kotlin"};
 
@@ -21,8 +40,6 @@ public class hangman {
         int mistakes = 0;
         final int maxMistakes = 8;
 
-        Scanner scanner = new Scanner(System.in);
-
         while (mistakes < maxMistakes) {
             System.out.println("\n" + String.valueOf(progress));
             System.out.println("Mistakes left: " + (maxMistakes - mistakes));
@@ -33,13 +50,13 @@ public class hangman {
                 System.out.println("You should input a single letter.");
                 continue;
             }
+
             char guessedLetter = input.charAt(0);
 
             if (!Character.isLowerCase(guessedLetter) || !Character.isLetter(guessedLetter)) {
                 System.out.println("Please enter a lowercase English letter.");
                 continue;
             }
-
 
             if (guessedLetters.contains(guessedLetter)) {
                 System.out.println("You've already guessed this letter.");
