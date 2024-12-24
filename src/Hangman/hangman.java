@@ -18,25 +18,23 @@ public class hangman {
         }
 
         HashSet<Character> guessedLetters = new HashSet<>();
-
-        int attemptsLeft = 8;
+        int mistakes = 0;
+        final int maxMistakes = 8;
 
         Scanner scanner = new Scanner(System.in);
 
-        while (attemptsLeft > 0) {
+        while (mistakes < maxMistakes) {
             System.out.println("\n" + String.valueOf(progress));
-            System.out.println("Attempts left: " + attemptsLeft);
+            System.out.println("Mistakes left: " + (maxMistakes - mistakes));
             System.out.print("Input a letter: > ");
             String input = scanner.nextLine();
 
-
             if (input.length() != 1) {
-                System.out.println("Please input a single letter.");
+                System.out.println("You should input a single letter.");
                 continue;
             }
 
             char guessedLetter = input.charAt(0);
-
 
             if (guessedLetters.contains(guessedLetter)) {
                 System.out.println("You've already guessed this letter.");
@@ -44,7 +42,6 @@ public class hangman {
             }
 
             guessedLetters.add(guessedLetter);
-
 
             boolean isCorrect = false;
             for (int i = 0; i < wordToGuess.length(); i++) {
@@ -54,12 +51,10 @@ public class hangman {
                 }
             }
 
-
             if (!isCorrect) {
-                attemptsLeft--;
+                mistakes++;
                 System.out.println("That letter doesn't appear in the word.");
             }
-
 
             if (String.valueOf(progress).equals(wordToGuess)) {
                 System.out.println("\n" + wordToGuess);
